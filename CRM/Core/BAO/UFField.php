@@ -45,7 +45,13 @@ class CRM_Core_BAO_UFField extends CRM_Core_DAO_UFField {
   /**
    * Create UFField object
    *
+   * @param array $params
+   *   Array per getfields metadata.
    *
+   * @throws API_Exception
+   *
+   * @return array
+   *   Newly created $ufFieldArray
    */
   public static function create(&$params) {
     // CRM-14756: kind of a hack-ish fix. If the user gives the id, uf_group_id is retrieved and then set.
@@ -70,7 +76,7 @@ class CRM_Core_BAO_UFField extends CRM_Core_DAO_UFField {
     }
 
     $ufFieldArray = array();
-    
+
     $fieldId = CRM_Utils_Array::value('id', $params);
     if (!empty($fieldId)) {
       $UFField = new CRM_Core_BAO_UFField();
@@ -260,10 +266,10 @@ WHERE cf.id IN (" . $customFieldIds . ") AND is_multiple = 1 LIMIT 0,1";
   public static function add(&$params) {
     // set values for uf field properties and save
     $ufField = new CRM_Core_DAO_UFField();
-    
+
     if (!is_string($params['field_name'])) {
       $ufField->copyValues($params);
-    
+
       $field_type       = CRM_Utils_Array::value('field_type', $params);
       $field_name       = CRM_Utils_Array::value('field_name', $params);
       $location_type_id = CRM_Utils_Array::value('location_type_id', $params, CRM_Utils_Array::value('website_type_id', $params));
@@ -293,7 +299,7 @@ WHERE cf.id IN (" . $customFieldIds . ") AND is_multiple = 1 LIMIT 0,1";
       return $ufField->save();
     }
     $ufField->copyValues($params);
-    
+
     return $ufField->save();
   }
 

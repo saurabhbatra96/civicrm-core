@@ -37,13 +37,11 @@
  * @param array $params
  *   Array per getfields metadata.
  *
- * @throws API_Exception
- *
  * @return array
  *   Newly created $ufFieldArray
  */
 function civicrm_api3_uf_field_create($params) {
-	return CRM_Core_BAO_UFField::create($params);
+  return CRM_Core_BAO_UFField::create($params);
 }
 
 /**
