@@ -50,8 +50,7 @@ class CRM_Core_BAO_UFField extends CRM_Core_DAO_UFField {
    *
    * @throws API_Exception
    *
-   * @return array
-   *   Newly created $ufFieldArray
+   * @return CRM_Core_BAO_UFField
    */
   public static function create(&$params) {
     // CRM-14756: kind of a hack-ish fix. If the user gives the id, uf_group_id is retrieved and then set.
@@ -74,8 +73,6 @@ class CRM_Core_BAO_UFField extends CRM_Core_DAO_UFField {
     if (!(CRM_Utils_Array::value('group_id', $params))) {
       $params['group_id'] = $groupId;
     }
-
-    $ufFieldArray = array();
 
     $fieldId = CRM_Utils_Array::value('id', $params);
     if (!empty($fieldId)) {
@@ -104,9 +101,7 @@ class CRM_Core_BAO_UFField extends CRM_Core_DAO_UFField {
     $fieldsType = CRM_Core_BAO_UFGroup::calculateGroupType($groupId, TRUE);
     CRM_Core_BAO_UFGroup::updateGroupTypes($groupId, $fieldsType);
 
-    _civicrm_api3_object_to_array($ufField, $ufFieldArray[$ufField->id]);
-    civicrm_api3('profile', 'getfields', array('cache_clear' => TRUE));
-    return civicrm_api3_create_success($ufFieldArray, $params);
+    return $ufField;
   }
 
 
