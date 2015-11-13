@@ -61,7 +61,7 @@ class CRM_Core_BAO_UFField extends CRM_Core_DAO_UFField {
       $groupId = CRM_Utils_Array::value('uf_group_id', $params);
     }
 
-    if (!empty($params['field_name'])) {
+    if (!empty($params['field_name']) && $params['field_name'] != CRM_Core_DAO::getFieldValue('CRM_Core_DAO_UFField', $groupId, 'field_name', 'uf_group_id')) {
       $field_name = CRM_Utils_Array::value('field_name', $params);
 
       if (strpos($field_name, 'formatting') !== 0 && !CRM_Core_BAO_UFField::isValidFieldName($field_name)) {
@@ -104,20 +104,6 @@ class CRM_Core_BAO_UFField extends CRM_Core_DAO_UFField {
    */
   public static function retrieve(&$params, &$defaults) {
     return CRM_Core_DAO::commonRetrieve('CRM_Core_DAO_UFField', $params, $defaults);
-  }
-
-  /**
-   * Get the form title.
-   *
-   * @param int $id
-   *   Id of uf_form.
-   *
-   * @return string
-   *   title
-   *
-   */
-  public static function getTitle($id) {
-    return CRM_Core_DAO::getFieldValue('CRM_Core_DAO_UFField', $groupId, 'title');
   }
 
   /**
